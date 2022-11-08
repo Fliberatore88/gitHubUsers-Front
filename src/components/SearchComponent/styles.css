@@ -1,0 +1,10 @@
+.form-container  {
+width: 100%;
+text-align: center;
+margin-top: 5rem;
+text-decoration: none;
+}
+.form-control  {
+  width: 50%;
+  text-align: center;
+  }
