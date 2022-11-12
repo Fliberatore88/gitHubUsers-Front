@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Card, FormControl, InputLabel, Input, FormHelperText, Button } from '@mui/material';
 import axios from 'axios';
 import '../SearchComponent/styles.css'
@@ -12,32 +12,37 @@ const Search = () => {
   const [user, setUser] = useState([]);
   const [data, setData] = useState([]);
 
-  const apiURL = 'http://localhost:3001/api/users/';
+  const apiURL = 'https://api.github.com/users/';
 
-  const handleChange = (e) => {
-    const value = e === null ? '' : e.target.value
-    setUser(value)
-    let consultaApi = axios.get(apiURL+user).then((res => {
-      console.log(res.data)
-      setData(res.data)
-    }))
-    console.log(data)
- 
+
+  const inputHandler = (e) => {
+  let userToLowerCase = e.target.value.toLowerCase();
+  setUser(userToLowerCase)
+  
   }
-  useEffect ( () => {
-
- 
 
 
-  },[])
+  const handleSubmit = () => {
+    axios.get(apiURL+user).then((res => {
+      setData(res.data)
+      console.log('RES DATA: ', res.data)
+      console.log(data)
+    })).catch((e) => {
+      console.log(e)
+    })
+    }
 
-  console.log(user)
   return (
     <>
-  <div className='form-container'>
+    <div className='form-container'>
    <FormControl className="form-control" >
-   <Input id="my-input" aria-describedby="username" placeholder='Ingresar Username' fullWidth />
-  <Button onSubmit={handleChange} >Clickeame puto </Button>
+   <Input id="my-input" aria-describedby="username" placeholder='Ingresar Username' fullWidth onChange={inputHandler} />
+   <Button onClick={handleSubmit} >Clickeame puto </Button>
+   {
+    data.length === 0 ? '' :<> <Card variant="outlined"> {data.login}</Card> 
+    <img src={data.avatar_url} alt="Imagen usuario github"></img>
+     <span>{data.name}</span></>
+    }
     </FormControl>
     </div>
     </>
