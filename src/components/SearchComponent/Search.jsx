@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Card, FormControl, InputLabel, Input, FormHelperText, Button } from '@mui/material';
+import { FormControl, Input,Button} from '@mui/material';
 import axios from 'axios';
 import '../SearchComponent/styles.css'
-
-
-
+import CardComponent from '../CardComponent/CardComponent'
 
 
 const Search = () => {
@@ -38,11 +36,11 @@ const Search = () => {
    <FormControl className="form-control" >
    <Input id="my-input" aria-describedby="username" placeholder='Ingresar Username' fullWidth onChange={inputHandler} />
    <Button onClick={handleSubmit} >Clickeame puto </Button>
-   {
-    data.length === 0 ? '' :<> <Card variant="outlined"> {data.login}</Card> 
-    <img src={data.avatar_url} alt="Imagen usuario github"></img>
-     <span>{data.name}</span></>
-    }
+   {data.length === 0 ? '' : <CardComponent 
+   img={data.avatar_url}
+   name={data.name}
+   userName={data.login}
+   />}
     </FormControl>
     </div>
     </>
@@ -50,4 +48,9 @@ const Search = () => {
 
 }
 
+ /*{
+    data.length === 0 ? '' :<> <Card variant="outlined"> {data.login}</Card> 
+    <img src={data.avatar_url} alt="Imagen usuario github"></img>
+     <span>{data.name}</span></>
+    }*/
 export default Search;
