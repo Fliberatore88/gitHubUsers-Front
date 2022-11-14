@@ -3,40 +3,53 @@ import { FormControl, Input,Button} from '@mui/material';
 import axios from 'axios';
 import '../SearchComponent/styles.css'
 import CardComponent from '../CardComponent/CardComponent'
+import NoDataComponent from '../NoDataComponent/NoDataComponent';
 
 
 const Search = () => {
 
-  const [user, setUser] = useState([]);
+  const [value, setValue] = useState("");
   const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
 
   const apiURL = 'https://api.github.com/users/';
 
 
-  const inputHandler = (e) => {
-  let userToLowerCase = e.target.value.toLowerCase();
-  setUser(userToLowerCase)
+  const handleChange = (e) => {
+  let valueToLowerCase = e.target.value.toLowerCase();
+  setValue(valueToLowerCase)
   
+  }
+
+  const handleKeyPress = (e) => {
+    console.log(e.key)
+    console.log(e.code)
+    console.log(e.onKeyPress)
+    if (e.key === "Enter"){
+      handleSubmit();
+    }
   }
 
 
   const handleSubmit = () => {
-    axios.get(apiURL+user).then((res => {
+    axios.get(apiURL+value).then((res => {
       setData(res.data)
       console.log('RES DATA: ', res.data)
       console.log(data)
     })).catch((e) => {
+      e.response.status === 404 ? setError(true) : setError(false)
       console.log(e)
     })
+    setValue("")
     }
 
   return (
     <>
     <div className='form-container'>
    <FormControl className="form-control" >
-   <Input id="my-input" aria-describedby="username" placeholder='Ingresar Username' fullWidth onChange={inputHandler} />
-   <Button onClick={handleSubmit} >Clickeame puto </Button>
-   {data.length === 0 ? '' : <CardComponent 
+   <Input id="my-input" aria-describedby="username" placeholder='Ingresar Username' fullWidth value={value} onChange={handleChange} onKeyPress={handleKeyPress} />
+   <Button type="submit" onClick={handleSubmit} >Clickeame puto </Button>
+   {error === true ? <NoDataComponent/> : <CardComponent 
    img={data.avatar_url}
    name={data.name}
    userName={data.login}
