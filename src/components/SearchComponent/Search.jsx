@@ -22,9 +22,6 @@ const Search = () => {
   }
 
   const handleKeyPress = (e) => {
-    console.log(e.key)
-    console.log(e.code)
-    console.log(e.onKeyPress)
     if (e.key === "Enter"){
       handleSubmit();
     }
@@ -34,8 +31,7 @@ const Search = () => {
   const handleSubmit = () => {
     axios.get(apiURL+value).then((res => {
       setData(res.data)
-      console.log('RES DATA: ', res.data)
-      console.log(data)
+      setError(false)
     })).catch((e) => {
       e.response.status === 404 ? setError(true) : setError(false)
       console.log(e)

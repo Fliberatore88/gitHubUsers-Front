@@ -20,7 +20,7 @@ const NoDataComponent = () => {
           isClickToPauseDisabled={true}
         />
         <div className="container-nodata-DataTable">
-        <span >Usuario no encontrado</span>
+        <span >User Not Found</span>
         </div>
     </div>
   );
