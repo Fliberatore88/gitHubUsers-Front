@@ -6,7 +6,7 @@ const CardComponent = (props) => {
   return (
     <Card className="card-container">
     <img src={props.img} alt=''></img>
-    <h2>{props.name}</h2>
+    <h2>A {props.name}</h2>
     <h2>{props.userName}</h2>
     </Card>
   )
